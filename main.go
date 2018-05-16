@@ -24,14 +24,15 @@ type decoder struct {
 }
 
 func (p *decoder) StartDatabase(n int, offset int) {
-	fmt.Printf("select db=%d \n", n)
+	fmt.Printf("select %d \n", n)
 	p.db = n
-	_, err := p.conn.Do("SELECT ", n)
+	_, err := p.conn.Do("SELECT", n)
 	if err != nil {
-		fmt.Fprint(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, err)
 	}
 
-	_, err = p.conn.Do("FLUSHDB", n)
+	fmt.Printf("flushdb %d \n", n)
+	_, err = p.conn.Do("FLUSHDB")
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}
