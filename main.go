@@ -14,6 +14,7 @@ import (
 var (
 	flagHost = flag.String("host", "127.0.0.1:6379", "host")
 	flagFile = flag.String("file", "dump.rdb", "rdb file")
+	flagAuth = flag.String("auth", "", "redis password if needed")
 )
 
 type decoder struct {
@@ -105,6 +106,13 @@ func main() {
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
+	}
+
+	if *flagAuth != "" {
+		if _, err := conn.Do("AUTH", *flagAuth); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	}
 	f, err := os.Open(*flagFile)
 	maybeFatal(err)

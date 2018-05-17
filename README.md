@@ -1,6 +1,8 @@
 support remote restore redis by rdb 
 ###Usage
 Usage of ./rdb_restore:
+  -auth string
+        redis password if needed
   -file string
         rdb file (default "dump.rdb")
   -host string
